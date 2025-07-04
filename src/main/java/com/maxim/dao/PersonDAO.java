@@ -41,6 +41,11 @@ public class PersonDAO {
 
         return Optional.of(person);
     }
+    public Optional<Person> findByName(String name) {
+        return jdbcTemplate.query("SELECT * FROM person WHERE name = ?", new Object[]{name}, new BeanPropertyRowMapper<>(Person.class))
+                .stream()
+                .findFirst();
+    }
     public void save(Person person) {
         jdbcTemplate.update("INSERT INTO person(name, year) VALUES (?, ?)", person.getName(), person.getYear());
     }

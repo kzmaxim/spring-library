@@ -3,6 +3,7 @@ package com.maxim.controllers;
 
 import com.maxim.dao.PersonDAO;
 import com.maxim.model.Person;
+import com.maxim.util.PersonValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class PeopleController {
 
     private final PersonDAO personDAO;
+    private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
+    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
         this.personDAO = personDAO;
+        this.personValidator = personValidator;
     }
 
     @GetMapping()
@@ -32,7 +35,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String showPerson(@PathVariable("id") int id, Model model) {
         Optional<Person> person = personDAO.findById(id);
-        if (!person.isPresent()) {
+        if (person.isEmpty()) {
             return "redirect:/people";
         }
         model.addAttribute("person", person.get());
@@ -49,6 +52,7 @@ public class PeopleController {
 
     @PostMapping
     public String addPerson(@ModelAttribute @Valid Person person, BindingResult bindingResult, Model model) {
+        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -59,7 +63,7 @@ public class PeopleController {
     @GetMapping("/{id}/edit")
     public String editPage(@PathVariable("id") int id, Model model) {
         Optional<Person> person = personDAO.findById(id);
-        if (!person.isPresent()) {
+        if (person.isEmpty()) {
             return "redirect:/people";
         }
         model.addAttribute("person", person.get());
@@ -68,6 +72,7 @@ public class PeopleController {
 
     @PatchMapping("/{id}")
     public String editPerson(@ModelAttribute @Valid Person person, BindingResult bindingResult, Model model) {
+        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("person", person);
             return "people/edit";
@@ -77,7 +82,7 @@ public class PeopleController {
     }
 
     @DeleteMapping("/{id}")
-    public String deletePerson(@ModelAttribute Person person, Model model) {
+    public String deletePerson(@ModelAttribute Person person) {
         personDAO.delete(person);
         return "redirect:/people";
     }
