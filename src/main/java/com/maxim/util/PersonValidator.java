@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.Optional;
+
 @Component
 public class PersonValidator implements Validator {
     private final PersonDAO personDAO;
@@ -25,8 +27,10 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
 
-        if (personDAO.findByName(person.getName()).isPresent()) {
-            errors.rejectValue("name", "error.person.name.exists");
+        Optional<Person> personFromBD = personDAO.findByName(person.getName());
+
+        if (personFromBD.isPresent() && personFromBD.get().getId() != person.getId()) {
+            errors.rejectValue("name", "", "Человек с таким именем уже существует");
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.maxim.util;
 
 import com.maxim.model.Book;
+import com.maxim.model.Person;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ public class BookMapper implements RowMapper<Book> {
         book.setTitle(rs.getString("title"));
         book.setAuthor(rs.getString("author"));
         book.setYear(rs.getInt("year"));
-        book.setPersonId(rs.getInt("person_id"));
+        book.setPersonId((Person) rs.getObject("person_id"));
 
         return book;
     }

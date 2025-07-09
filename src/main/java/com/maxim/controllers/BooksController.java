@@ -79,8 +79,12 @@ public class BooksController {
             model.addAttribute("book", b);
 
             model.addAttribute("people", personDAO.findAll());
-            personDAO.findById(b.getPersonId())
-                    .ifPresent(owner -> model.addAttribute("owner", owner));
+            if (b.getPersonId() != null) {
+                personDAO.findById(b.getPersonId().getId())
+                        .ifPresent(owner -> model.addAttribute("owner", owner));
+            } else {
+                model.addAttribute("owner", null);
+            }
 
             return "books/book";
         }
@@ -91,7 +95,7 @@ public class BooksController {
 
     @PatchMapping("/setPerson")
     public String setPerson(@ModelAttribute Book book) {
-        bookDAO.setPerson(book.getId(), book.getPersonId());
+        bookDAO.setPerson(book.getId(), book.getPersonId().getId());
         return "redirect:/books/" + book.getId();
     }
 
