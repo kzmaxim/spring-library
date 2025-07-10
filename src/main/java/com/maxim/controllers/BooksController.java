@@ -33,6 +33,32 @@ public class BooksController {
         return "books/show";
     }
 
+    @GetMapping(params = {"page", "books_per_page"})
+    public String getBooks(@RequestParam(name="page") int page,
+                           @RequestParam(name="books_per_page") int booksPerPage,
+                           Model model) {
+        model.addAttribute("books", booksService.findAll(page, booksPerPage));
+
+        return "books/show";
+    }
+
+    @GetMapping(params = {"sort_by_year"})
+    public String getBooks(@RequestParam(name="sort_by_year") boolean sortByYear, Model model) {
+        model.addAttribute("books", booksService.findAll(sortByYear));
+
+        return "books/show";
+    }
+
+    @GetMapping(params = {"page", "books_per_page", "sort_by_year"})
+    public String getBooks(@RequestParam(name="page") int page,
+                           @RequestParam(name="books_per_page") int booksPerPage,
+                           @RequestParam(name="sort_by_year") boolean sortByYear,
+                           Model model) {
+        model.addAttribute("books", booksService.findAll(page, booksPerPage, sortByYear));
+
+        return "books/show";
+    }
+
     @GetMapping("/new")
     public String newBook(Model model, @ModelAttribute Book book) {
         model.addAttribute("book", book);

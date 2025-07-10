@@ -6,6 +6,8 @@ import com.maxim.model.Person;
 import com.maxim.repositories.BooksRepository;
 import com.maxim.repositories.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,27 @@ public class BooksService {
 
     public List<Book> findAll() {
         return booksRepository.findAll();
+    }
+
+    public List<Book> findAll(int page, int booksPerPage) {
+        return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
+    }
+
+    public List<Book> findAll(boolean sortByYear) {
+        if (sortByYear) {
+            return booksRepository.findAll(Sort.by("year"));
+        } else {
+            return booksRepository.findAll();
+        }
+    }
+
+    public List<Book> findAll(int page, int booksPerPage, boolean sortByYear) {
+        if (sortByYear) {
+            return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("year"))).getContent();
+        }
+        else {
+            return findAll(page, booksPerPage);
+        }
     }
 
     public Optional<Book> findById(int id) {
