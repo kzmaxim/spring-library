@@ -34,6 +34,11 @@ public class Person {
         this.year = year;
     }
 
+    public void addBook(Book book) {
+        books.add(book);
+        book.setPersonId(this);
+    }
+
 
     @Override
     public String toString() {

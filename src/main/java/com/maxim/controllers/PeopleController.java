@@ -1,8 +1,9 @@
 package com.maxim.controllers;
 
 
-import com.maxim.dao.PersonDAO;
 import com.maxim.model.Person;
+import com.maxim.repositories.PeopleRepository;
+import com.maxim.services.PeopleService;
 import com.maxim.util.PersonValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +18,24 @@ import java.util.Optional;
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PersonDAO personDAO;
+    private final PeopleService peopleService;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
-        this.personDAO = personDAO;
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
+        this.peopleService = peopleService;
         this.personValidator = personValidator;
     }
 
     @GetMapping()
     public String showPeople(Model model) {
-        model.addAttribute("people", personDAO.findAll());
+        model.addAttribute("people",peopleService.findAll());
         return "people/show";
     }
 
     @GetMapping("/{id}")
     public String showPerson(@PathVariable("id") int id, Model model) {
-        Optional<Person> person = personDAO.findById(id);
+        Optional<Person> person = peopleService.findById(id);
         if (person.isEmpty()) {
             return "redirect:/people";
         }
@@ -51,18 +52,18 @@ public class PeopleController {
     }
 
     @PostMapping
-    public String addPerson(@ModelAttribute @Valid Person person, BindingResult bindingResult, Model model) {
+    public String addPerson(@ModelAttribute @Valid Person person, BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
-        personDAO.save(person);
+        peopleService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String editPage(@PathVariable("id") int id, Model model) {
-        Optional<Person> person = personDAO.findById(id);
+        Optional<Person> person = peopleService.findById(id);
         if (person.isEmpty()) {
             return "redirect:/people";
         }
@@ -77,13 +78,13 @@ public class PeopleController {
             model.addAttribute("person", person);
             return "people/edit";
         }
-        personDAO.update(person);
+        peopleService.update(person);
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
     public String deletePerson(@ModelAttribute Person person) {
-        personDAO.delete(person);
+        peopleService.delete(person);
         return "redirect:/people";
     }
 }
