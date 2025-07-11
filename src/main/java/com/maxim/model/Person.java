@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,11 +30,6 @@ public class Person {
 
     @OneToMany(mappedBy = "personId", cascade = CascadeType.PERSIST)
     private List<Book> books;
-
-    public Person(String name, int year) {
-        this.name = name;
-        this.year = year;
-    }
 
     public void addBook(Book book) {
         books.add(book);

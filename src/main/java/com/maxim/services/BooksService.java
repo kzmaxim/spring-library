@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +77,7 @@ public class BooksService {
         Optional<Book> book = booksRepository.findById(id);
         Optional<Person> person = peopleRepository.findById(personId);
         if (book.isPresent() && person.isPresent()) {
+            book.get().setAddedBookAt(LocalDate.now());
             person.get().addBook(book.get());
         }
     }
@@ -83,6 +85,13 @@ public class BooksService {
     @Transactional
     public void releaseBook(int id) {
         Optional<Book> book = booksRepository.findById(id);
-        book.ifPresent(value -> value.setPersonId(null));
+        book.ifPresent(value -> {
+            value.setPersonId(null);
+            value.setAddedBookAt(null);
+        });
+    }
+
+    public List<Book> findByNameStartingWith(String name) {
+        return booksRepository.findByTitleStartingWith(name);
     }
 }

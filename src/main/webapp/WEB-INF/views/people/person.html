@@ -11,7 +11,9 @@
 <div th:if="${!person.books.isEmpty()}" >
     <p>Books:</p>
     <div th:each="book : ${person.books}">
-        <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.title}"></a>
+        <a th:style="(${book.isOverdue}) ? 'color:red;' : 'color:black;'"
+           th:href="@{/books/{id}(id=${book.id})}"
+           th:text="${book.title}"></a>
     </div>
 </div>
 <div th:if="${person.books.isEmpty()}">

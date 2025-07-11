@@ -38,6 +38,14 @@ public class Book {
         this.year = year;
     }
 
+    @Column(name="added_book_at")
+    @Temporal(TemporalType.DATE)
+    private LocalDate addedBookAt;
+
+    @Transient
+    private boolean isOverdue;
+
+
     @Override
     public String toString() {
         return "Book{" +

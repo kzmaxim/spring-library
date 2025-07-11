@@ -135,4 +135,18 @@ public class BooksController {
         booksService.delete(book);
         return "redirect:/books";
     }
+
+    @GetMapping("/search")
+    public String searchBooks(@ModelAttribute Book book, Model model) {
+        model.addAttribute("book", book);
+        return "books/search";
+    }
+
+    @GetMapping(value = "/search", params = {"name"})
+    public String searchBooks(@RequestParam(name="name") String name,
+                              Model model) {
+        model.addAttribute("books", booksService.findByNameStartingWith(name));
+
+        return "books/search";
+    }
 }
