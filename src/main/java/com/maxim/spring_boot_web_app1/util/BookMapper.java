@@ -1,7 +1,7 @@
-package com.maxim.util;
+package com.maxim.spring_boot_web_app1.util;
 
-import com.maxim.model.Book;
-import com.maxim.model.Person;
+import com.maxim.spring_boot_web_app1.model.Book;
+import com.maxim.spring_boot_web_app1.model.Person;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

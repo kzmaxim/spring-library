@@ -1,7 +1,7 @@
-package com.maxim.repositories;
+package com.maxim.spring_boot_web_app1.repositories;
 
 
-import com.maxim.model.Book;
+import com.maxim.spring_boot_web_app1.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

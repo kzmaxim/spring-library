@@ -1,7 +1,7 @@
-package com.maxim.repositories;
+package com.maxim.spring_boot_web_app1.repositories;
 
 
-import com.maxim.model.Person;
+import com.maxim.spring_boot_web_app1.model.Person;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

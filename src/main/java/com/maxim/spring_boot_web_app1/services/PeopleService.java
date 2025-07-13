@@ -1,9 +1,9 @@
-package com.maxim.services;
+package com.maxim.spring_boot_web_app1.services;
 
 
-import com.maxim.model.Book;
-import com.maxim.model.Person;
-import com.maxim.repositories.PeopleRepository;
+import com.maxim.spring_boot_web_app1.model.Book;
+import com.maxim.spring_boot_web_app1.model.Person;
+import com.maxim.spring_boot_web_app1.repositories.PeopleRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,14 +1,13 @@
-package com.maxim.model;
+package com.maxim.spring_boot_web_app1.model;
 
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
-import org.hibernate.annotations.Cascade;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 

@@ -1,9 +1,9 @@
-package com.maxim.controllers;
+package com.maxim.spring_boot_web_app1.controllers;
 
 
-import com.maxim.model.Book;
-import com.maxim.services.BooksService;
-import com.maxim.services.PeopleService;
+import com.maxim.spring_boot_web_app1.model.Book;
+import com.maxim.spring_boot_web_app1.services.BooksService;
+import com.maxim.spring_boot_web_app1.services.PeopleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

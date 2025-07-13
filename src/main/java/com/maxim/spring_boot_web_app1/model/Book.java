@@ -1,9 +1,12 @@
-package com.maxim.model;
+package com.maxim.spring_boot_web_app1.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -39,7 +42,7 @@ public class Book {
     }
 
     @Column(name="added_book_at")
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     private LocalDate addedBookAt;
 
     @Transient

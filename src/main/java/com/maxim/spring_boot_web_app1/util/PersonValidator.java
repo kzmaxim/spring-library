@@ -1,7 +1,7 @@
-package com.maxim.util;
+package com.maxim.spring_boot_web_app1.util;
 
-import com.maxim.model.Person;
-import com.maxim.services.PeopleService;
+import com.maxim.spring_boot_web_app1.model.Person;
+import com.maxim.spring_boot_web_app1.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
